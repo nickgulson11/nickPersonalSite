@@ -47,12 +47,12 @@
 
 
         .content {
-            padding: 15px;
+            padding: 5px 15px 15px 15px;
         }
 
         .live-controls {
             text-align: center;
-            margin: 5px 0 20px 0;
+            margin: 0 0 15px 0;
             padding: 0;
             background: none;
             border-radius: 0;
@@ -243,13 +243,14 @@
 
         .back-link {
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             background: rgba(255,255,255,0.2);
             border-radius: 20px;
             transition: all 0.3s ease;
+            font-size: 0.9em;
         }
 
         .back-link:hover {
@@ -389,6 +390,7 @@
 
         function updateStatus(message, type = 'waiting', showSpinner = false) {
             const statusElement = document.getElementById('status');
+            statusElement.style.display = 'block'; // Make sure it's visible when updating
             statusElement.className = `status-section status-${type}`;
 
             const spinnerHTML = showSpinner ? '<span class="spinner"></span>' : '';
@@ -463,7 +465,10 @@
                     document.getElementById('last-updated').textContent = `Last updated: ${data.timestamp}`;
                 }
 
-                updateStatus('', 'fresh');
+                // Hide status after successful refresh
+                setTimeout(() => {
+                    document.getElementById('status').style.display = 'none';
+                }, 1500);
 
             } catch (error) {
                 console.error('Error fetching bus data:', error);
