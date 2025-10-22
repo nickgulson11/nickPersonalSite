@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Purple Bus Tracker</title>
+    <link rel="icon" type="image/png" href="../PurpleBusLogo.png">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -31,6 +32,14 @@
             padding: 25px;
             text-align: center;
             border-bottom: 3px solid rgba(255,255,255,0.2);
+        }
+
+        .header-logo {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .header h1 {
@@ -264,11 +273,17 @@
             }
 
             .content {
-                padding: 15px;
+                padding: 2px 10px 10px 10px;
             }
 
             .header {
-                padding: 12px;
+                padding: 15px 12px;
+            }
+
+            .header-logo {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 8px;
             }
 
             .header h1 {
@@ -276,8 +291,8 @@
             }
 
             .live-controls {
-                margin: 15px 0 10px 0;
-                padding: 12px;
+                margin: 0 0 10px 0;
+                padding: 0;
             }
 
             .refresh-btn {
@@ -334,9 +349,9 @@
             }
 
             .back-link {
-                padding: 8px 16px;
-                margin-bottom: 15px;
-                font-size: 0.9em;
+                padding: 6px 12px;
+                margin-bottom: 3px;
+                font-size: 0.85em;
             }
         }
     </style>
@@ -344,6 +359,7 @@
 <body>
     <div class="container">
         <div class="header">
+            <img src="../PurpleBusLogo.png" alt="Purple Bus Logo" class="header-logo">
             <h1>Purple Bus Tracker</h1>
             <p>Intercampus shuttle times used for Nick's daily commute<br> For more info visit <a href="https://northwestern.tripshot.com/" target="_blank" style="color: #fff; text-decoration: underline;">northwestern.tripshot.com</a></p>
         </div>
