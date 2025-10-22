@@ -145,6 +145,9 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-left: 5px solid #667eea;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .project-card:hover {
@@ -156,6 +159,7 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border-left: 5px solid #fff;
+            text-decoration: none;
         }
 
         .project-card.featured:hover {
@@ -178,35 +182,6 @@
             opacity: 0.8;
         }
 
-        .project-links {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .project-link {
-            padding: 8px 16px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 0.9em;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .project-card .project-link {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-        }
-
-        .project-card.featured .project-link {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-
-        .project-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-        }
 
         .footer {
             text-align: center;
@@ -273,44 +248,29 @@
         <section class="projects" id="projects">
             <h2>Featured Projects</h2>
             <div class="project-grid">
-                <div class="project-card featured">
+                <a href="/ShuttleTimes/" class="project-card featured">
                     <span class="project-icon">🚌</span>
-                    <h3>Northwestern Shuttle Times</h3>
+                    <h3>Upcoming Intercampus Shuttles</h3>
                     <p>Real-time bus tracking for Northwestern's intercampus shuttle. Shows live arrival times with a clean, responsive interface. Built with Python backend and modern web technologies.</p>
-                    <div class="project-links">
-                        <a href="/ShuttleTimes/" class="project-link">🚀 Live Demo</a>
-                        <a href="https://github.com/nickgulson11/northwestern-shuttle-times" class="project-link">📱 View Code</a>
-                    </div>
-                </div>
+                </a>
 
-                <div class="project-card">
-                    <span class="project-icon">📊</span>
-                    <h3>Excel Data Analyzer</h3>
-                    <p>Web-based tool for analyzing Excel spreadsheets with interactive visualizations. Upload, analyze, and gain insights from your data with an intuitive interface.</p>
-                    <div class="project-links">
-                        <a href="#" class="project-link">🔗 Coming Soon</a>
-                        <a href="#" class="project-link">💻 GitHub</a>
-                    </div>
-                </div>
+                <a href="https://nickgulson11.github.io/mom/" class="project-card">
+                    <span class="project-icon">💝</span>
+                    <h3>Mother's Day Message</h3>
+                    <p>A heartfelt interactive message created for Mother's Day. Features personalized content and thoughtful design to celebrate and honor mothers everywhere.</p>
+                </a>
 
-                <div class="project-card">
+                <a href="https://nickgulson11.github.io/AccountingGame/accounting_game.html" class="project-card">
                     <span class="project-icon">🎮</span>
                     <h3>Accounting Game</h3>
                     <p>Interactive educational game for learning accounting principles. Gamifies financial concepts to make learning engaging and accessible.</p>
-                    <div class="project-links">
-                        <a href="https://nickgulson11.github.io/AccountingGame/accounting_game.html" class="project-link">🎯 Play Game</a>
-                        <a href="https://github.com/nickgulson11/AccountingGame" class="project-link">⚡ Source</a>
-                    </div>
-                </div>
+                </a>
 
-                <div class="project-card">
+                <a href="https://github.com/nickgulson11" class="project-card">
                     <span class="project-icon">🛠️</span>
                     <h3>More Projects</h3>
                     <p>Exploring new technologies and building solutions. Check back soon for updates on current experiments with AI, web development, and automation.</p>
-                    <div class="project-links">
-                        <a href="https://github.com/nickgulson11" class="project-link">🔍 Browse All</a>
-                    </div>
-                </div>
+                </a>
             </div>
         </section>
     </div>
