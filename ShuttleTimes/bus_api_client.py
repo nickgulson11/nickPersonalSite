@@ -124,9 +124,8 @@ class BusAPIClient:
     def format_bus_info(self, bus_info: Dict) -> str:
         """Format bus information for display"""
         departure_time = bus_info['departure_time']
-        local_time = departure_time.astimezone()  # Convert to local timezone
 
-        time_str = local_time.strftime('%I:%M %p')
+        time_str = departure_time.strftime('%I:%M %p')
         minutes = bus_info['minutes_until']
 
         if minutes <= 0:
@@ -246,7 +245,7 @@ def main():
 
                     print(f"Next {num_to_show} bus{'es' if num_to_show > 1 else ''} {action_word} {stop_name}:")
                     for i, bus in enumerate(upcoming_buses[:2], 1):
-                        departure_time = bus['departure_time'].astimezone()
+                        departure_time = bus['departure_time']
                         time_str = departure_time.strftime('%I:%M %p')
                         print(f"  {i}. {time_str} ({bus['minutes_until']} min) - {bus['rider_status']}")
                 else:
@@ -294,7 +293,7 @@ def main():
 
         print(f"Next {num_to_show} bus{'es' if num_to_show > 1 else ''} {action_word} {stop_name}:")
         for i, bus in enumerate(upcoming_buses[:2], 1):
-            departure_time = bus['departure_time'].astimezone()
+            departure_time = bus['departure_time']
             time_str = departure_time.strftime('%I:%M %p')
             print(f"  {i}. {time_str} ({bus['minutes_until']} min) - {bus['rider_status']}")
     else:

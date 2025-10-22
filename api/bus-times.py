@@ -139,7 +139,7 @@ class handler(BaseHTTPRequestHandler):
                     # Format the response
                     formatted_buses = []
                     for bus in upcoming_buses[:2]:  # Next 2 buses
-                        departure_time = bus['departure_time'].astimezone()
+                        departure_time = bus['departure_time']
                         formatted_buses.append({
                             'time': departure_time.strftime('%I:%M %p'),
                             'minutes': bus['minutes_until'],
