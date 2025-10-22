@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "api/bus-times.py": {
+      "runtime": "python3.9"
+    }
+  },
+  "routes": [
+    {
+      "src": "/ShuttleTimes/",
+      "dest": "/ShuttleTimes/index.html"
+    },
+    {
+      "src": "/api/bus-times",
+      "dest": "/api/bus-times.py"
+    }
+  ]
+}

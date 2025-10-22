@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Northwestern Bus Times</title>
+    <title>Northwestern Shuttle Times</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -42,8 +42,124 @@
             font-size: 1.1em;
         }
 
+        .live-badge {
+            display: inline-block;
+            background: #00ff00;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
         .content {
             padding: 30px;
+        }
+
+        .live-controls {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .live-controls h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.3em;
+        }
+
+        .refresh-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-2px);
+        }
+
+        .refresh-btn.primary {
+            background: #fff;
+            color: #28a745;
+            border-color: #fff;
+        }
+
+        .refresh-btn.primary:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .refresh-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status-section {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .status-waiting {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid rgba(255, 193, 7, 0.3);
+            color: #856404;
+        }
+
+        .status-updating {
+            background: rgba(23, 162, 184, 0.1);
+            border: 2px solid rgba(23, 162, 184, 0.3);
+            color: #0c5460;
+        }
+
+        .status-fresh {
+            background: rgba(40, 167, 69, 0.1);
+            border: 2px solid rgba(40, 167, 69, 0.3);
+            color: #155724;
+        }
+
+        .status-error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 2px solid rgba(220, 53, 69, 0.3);
+            color: #721c24;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .bus-section {
@@ -124,31 +240,11 @@
             opacity: 0.8;
         }
 
-        .error {
-            background: rgba(231, 76, 60, 0.8);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
+        .no-data {
             text-align: center;
-        }
-
-        .github-info {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: #666;
-        }
-
-        .github-info a {
-            color: #4A154B;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .github-info a:hover {
-            text-decoration: underline;
+            padding: 40px;
+            color: rgba(255,255,255,0.8);
+            font-style: italic;
         }
 
         .last-updated {
@@ -158,107 +254,170 @@
             font-size: 0.9em;
         }
 
-        .loading {
-            text-align: center;
-            color: rgba(255,255,255,0.8);
-            font-style: italic;
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Northwestern Bus Times</h1>
-            <p>Real-time Intercampus Shuttle Information</p>
+            <h1>Northwestern Shuttle Times</h1>
+            <p>Live Data<span class="live-badge">LIVE</span></p>
         </div>
 
         <div class="content">
+            <a href="/" class="back-link">← Back to Nick's Site</a>
+
+            <div class="live-controls">
+                <h3>🚀 Get Fresh Live Data</h3>
+
+                <button onclick="fetchLiveData('both')" class="refresh-btn primary" id="refresh-btn">
+                    ⚡ Get Live Times Now
+                </button>
+            </div>
+
+            <div class="status-section status-waiting" id="status">
+                ⏱️ Ready to fetch live data when you click above!
+            </div>
+
             <div class="bus-section outbound">
                 <h2>Outbound - To Ward</h2>
-                <div class="bus-times">
-                    <!-- OUTBOUND_DATA_PLACEHOLDER -->
-<div class="bus-header">Next 2 buses arriving at Ward:</div>
-
-                    <div class="bus-time-item">
-                        <span class="time">09:35 PM</span>
-                        <span class="minutes">46 min</span>
-                        <span class="status">OnTime</span>
+                <div class="bus-times" id="outbound-times">
+                    <div class="no-data">
+                        Click "Get Live Times Now" above to load fresh data
                     </div>
-                    
-
-                    <div class="bus-time-item">
-                        <span class="time">10:25 PM</span>
-                        <span class="minutes">96 min</span>
-                        <span class="status">OnTime</span>
-                    </div>
-                    
-                    <!-- END_OUTBOUND_DATA_PLACEHOLDER -->
                 </div>
             </div>
 
             <div class="bus-section inbound">
                 <h2>Inbound - From Tech</h2>
-                <div class="bus-times">
-                    <!-- INBOUND_DATA_PLACEHOLDER -->
-<div class="bus-header">Next 1 bus departing from Tech:</div>
-
-                    <div class="bus-time-item">
-                        <span class="time">09:45 PM</span>
-                        <span class="minutes">56 min</span>
-                        <span class="status">OnTime</span>
+                <div class="bus-times" id="inbound-times">
+                    <div class="no-data">
+                        Click "Get Live Times Now" above to load fresh data
                     </div>
-                    
-                    <!-- END_INBOUND_DATA_PLACEHOLDER -->
                 </div>
             </div>
 
-            <div class="github-info">
-                <strong>🤖 Auto-updated via GitHub Actions</strong><br>
-                💰 Cost-optimized: Updates every 15 minutes (FREE!)<br>
-                <a href="https://github.com/your-username/northwestern-bus-times/actions/workflows/manual-update.yml" target="_blank">🚀 Need Fresh Data? Click Here!</a>
-                | <a href="https://github.com/your-username/northwestern-bus-times" target="_blank">View Code</a>
-            </div>
-
-            <div class="last-updated">
-                Last updated: <!-- TIMESTAMP_PLACEHOLDER -->01:48:59 AM UTC on October 22, 2025<!-- END_TIMESTAMP_PLACEHOLDER -->
+            <div class="last-updated" id="last-updated">
+                Last updated: Click above to load live data
             </div>
         </div>
     </div>
 
     <script>
-        // Smart auto-refresh: Check for updates every 5 minutes, but only refresh if needed
-        function checkForUpdates() {
-            // Simple timestamp check - in real use, this would compare against last update time
-            const timestampText = document.querySelector('.last-updated').textContent;
-            const now = new Date();
+        let isLoading = false;
 
-            // Auto-refresh every 15 minutes to align with GitHub Actions schedule
-            console.log('Checking for bus data updates...');
-            window.location.reload();
+        function updateStatus(message, type = 'waiting', showSpinner = false) {
+            const statusElement = document.getElementById('status');
+            statusElement.className = `status-section status-${type}`;
+
+            const spinnerHTML = showSpinner ? '<span class="spinner"></span>' : '';
+            statusElement.innerHTML = `${spinnerHTML}${message}`;
         }
 
-        // Check for updates every 15 minutes (matches GitHub Actions schedule)
-        setInterval(checkForUpdates, 900000); // 15 minutes
+        function setButtonsDisabled(disabled) {
+            document.getElementById('refresh-btn').disabled = disabled;
+            isLoading = disabled;
+        }
 
-        // Add keyboard shortcut for manual refresh
+        function displayBusData(route, data) {
+            const container = document.getElementById(`${route}-times`);
+
+            if (data.error || !data.buses || data.buses.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        ${data.error || `No buses currently scheduled for ${data.stop_name}`}
+                    </div>
+                `;
+                return;
+            }
+
+            const busCount = data.buses.length;
+            const header = `<div class="bus-header">Next ${busCount} bus${busCount > 1 ? 'es' : ''} ${data.action} ${data.stop_name}:</div>`;
+
+            const busItems = data.buses.map(bus => `
+                <div class="bus-time-item">
+                    <span class="time">${bus.time}</span>
+                    <span class="minutes">${bus.minutes} min</span>
+                    <span class="status">${bus.status}</span>
+                </div>
+            `).join('');
+
+            container.innerHTML = header + busItems;
+        }
+
+        async function fetchLiveData(route = 'both') {
+            if (isLoading) return;
+
+            try {
+                setButtonsDisabled(true);
+                updateStatus('Fetching fresh bus data...', 'updating', true);
+
+                const response = await fetch(`/api/bus-times?route=${route}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Update the UI with fresh data
+                if (route === 'both' || route === 'outbound') {
+                    if (data.outbound) {
+                        displayBusData('outbound', data.outbound);
+                    }
+                }
+
+                if (route === 'both' || route === 'inbound') {
+                    if (data.inbound) {
+                        displayBusData('inbound', data.inbound);
+                    }
+                }
+
+                // Update timestamp
+                if (data.timestamp) {
+                    document.getElementById('last-updated').textContent = `Last updated: ${data.timestamp}`;
+                }
+
+                updateStatus('✅ Fresh data loaded successfully!', 'fresh');
+
+            } catch (error) {
+                console.error('Error fetching bus data:', error);
+                updateStatus(`❌ Error: ${error.message}`, 'error');
+            } finally {
+                setButtonsDisabled(false);
+            }
+        }
+
+        // Add keyboard shortcut for refresh
         document.addEventListener('keydown', (e) => {
             if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
                 e.preventDefault();
-                window.location.reload();
+                fetchLiveData('both');
             }
         });
 
-        // Show a subtle indicator when data might be stale
+        // Auto-fetch data on page load
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const timestampText = document.querySelector('.last-updated').textContent;
-                const timeMatch = timestampText.match(/(\d{2}):(\d{2}):(\d{2})/);
-
-                if (timeMatch) {
-                    const now = new Date();
-                    // Simple age check - if it feels old, suggest refresh
-                    console.log('Bus data loaded. Press Ctrl+R to refresh for latest times.');
-                }
+                fetchLiveData('both');
             }, 1000);
         });
     </script>
