@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler
 import json
 import requests
 from datetime import datetime, timezone
+import pytz
 from typing import List, Dict, Optional
 from urllib.parse import parse_qs
 
@@ -27,7 +28,8 @@ class BusAPIClient:
 
     def parse_bus_times(self, data: Dict) -> List[Dict]:
         upcoming_buses = []
-        current_time = datetime.now()
+        central_tz = pytz.timezone('America/Chicago')
+        current_time = datetime.now(central_tz)
         rides = data.get('rides', [])
 
         for ride in rides:
@@ -60,7 +62,13 @@ class BusAPIClient:
 
                     expected_arrival = stop_info.get('expectedArrivalTime')
                     if expected_arrival:
-                        departure_time = datetime.fromisoformat(expected_arrival.replace('Z', ''))
+                        # Parse as UTC and convert to Central time
+                        if expected_arrival.endswith('Z'):
+                            utc_time = datetime.fromisoformat(expected_arrival.replace('Z', '')).replace(tzinfo=timezone.utc)
+                            departure_time = utc_time.astimezone(central_tz)
+                        else:
+                            # Assume it's already in Central time if no timezone info
+                            departure_time = datetime.fromisoformat(expected_arrival).replace(tzinfo=central_tz)
 
                         if departure_time > current_time:
                             upcoming_buses.append({
@@ -77,7 +85,8 @@ class BusAPIClient:
         return upcoming_buses
 
 def get_current_date():
-    return datetime.now().strftime('%Y-%m-%d')
+    central_tz = pytz.timezone('America/Chicago')
+    return datetime.now(central_tz).strftime('%Y-%m-%d')
 
 def build_api_url(route_id: str, current_date: str = None):
     if current_date is None:
@@ -160,7 +169,8 @@ class handler(BaseHTTPRequestHandler):
                     }
 
             # Add timestamp
-            results['timestamp'] = datetime.now().strftime('%I:%M:%S %p CST on %B %d, %Y')
+            central_tz = pytz.timezone('America/Chicago')
+            results['timestamp'] = datetime.now(central_tz).strftime('%I:%M:%S %p CST on %B %d, %Y')
 
             # Send response
             self.send_response(200)
@@ -180,9 +190,10 @@ class handler(BaseHTTPRequestHandler):
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
 
+            central_tz = pytz.timezone('America/Chicago')
             error_response = json.dumps({
                 'error': str(e),
-                'timestamp': datetime.now().strftime('%I:%M:%S %p CST')
+                'timestamp': datetime.now(central_tz).strftime('%I:%M:%S %p CST')
             })
             self.wfile.write(error_response.encode())
 

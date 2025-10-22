@@ -366,10 +366,12 @@
 
         // Utility functions
         function getCurrentDate() {
+            // Get current date in Central Time
             const now = new Date();
-            return now.getFullYear() + '-' +
-                   String(now.getMonth() + 1).padStart(2, '0') + '-' +
-                   String(now.getDate()).padStart(2, '0');
+            const centralTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Chicago"}));
+            return centralTime.getFullYear() + '-' +
+                   String(centralTime.getMonth() + 1).padStart(2, '0') + '-' +
+                   String(centralTime.getDate()).padStart(2, '0');
         }
 
         function buildApiUrl(routeId) {
@@ -383,7 +385,8 @@
             return date.toLocaleTimeString('en-US', {
                 hour: 'numeric',
                 minute: '2-digit',
-                hour12: true
+                hour12: true,
+                timeZone: 'America/Chicago'
             });
         }
 
@@ -509,7 +512,14 @@
 
                         const expectedArrival = stopInfo.expectedArrivalTime;
                         if (expectedArrival) {
-                            const departureTime = new Date(expectedArrival);
+                            // Parse the time properly - if it ends with Z, it's UTC
+                            let departureTime;
+                            if (expectedArrival.endsWith('Z')) {
+                                departureTime = new Date(expectedArrival);
+                            } else {
+                                // Assume it's already in Central time
+                                departureTime = new Date(expectedArrival);
+                            }
 
                             if (departureTime > currentTime) {
                                 upcomingBuses.push({
@@ -568,8 +578,9 @@
                 now.toLocaleTimeString('en-US', {
                     hour: 'numeric',
                     minute: '2-digit',
-                    second: '2-digit'
-                }) + ' (Live Data)';
+                    second: '2-digit',
+                    timeZone: 'America/Chicago'
+                }) + ' CST (Live Data)';
         }
 
         async function refreshOutbound() {

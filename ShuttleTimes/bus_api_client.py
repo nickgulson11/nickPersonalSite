@@ -7,6 +7,7 @@ Makes API calls to get bus times and extracts the next upcoming bus departure
 import requests
 import json
 from datetime import datetime, timezone
+import pytz
 import sys
 from typing import List, Dict, Optional
 
@@ -44,7 +45,8 @@ class BusAPIClient:
     def parse_bus_times(self, data: Dict, filter_target_stop: bool = True) -> List[Dict]:
         """Parse bus data to extract upcoming departure times for target stop"""
         upcoming_buses = []
-        current_time = datetime.now()
+        central_tz = pytz.timezone('America/Chicago')
+        current_time = datetime.now(central_tz)
 
         rides = data.get('rides', [])
 
@@ -88,7 +90,13 @@ class BusAPIClient:
                     scheduled_departure = stop_info.get('scheduledDepartureTime')
 
                     if expected_arrival:
-                        departure_time = datetime.fromisoformat(expected_arrival.replace('Z', ''))
+                        # Parse as UTC and convert to Central time
+                        if expected_arrival.endswith('Z'):
+                            utc_time = datetime.fromisoformat(expected_arrival.replace('Z', '')).replace(tzinfo=timezone.utc)
+                            departure_time = utc_time.astimezone(central_tz)
+                        else:
+                            # Assume it's already in Central time if no timezone info
+                            departure_time = datetime.fromisoformat(expected_arrival).replace(tzinfo=central_tz)
 
                         # Only include future departures
                         if departure_time > current_time:
@@ -177,7 +185,8 @@ class BusAPIClient:
 
 def get_current_date():
     """Get current date in YYYY-MM-DD format"""
-    return datetime.now().strftime('%Y-%m-%d')
+    central_tz = pytz.timezone('America/Chicago')
+    return datetime.now(central_tz).strftime('%Y-%m-%d')
 
 def build_api_url(route_id: str, current_date: str = None):
     """Build API URL with current date"""
