@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nick Gulson - Developer & Student</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            color: white;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255,255,255,0.3);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .hero .tagline {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero .description {
+            font-size: 1.1em;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-resume {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .btn-resume:hover {
+            background: linear-gradient(135deg, #218838, #1ea181);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .projects {
+            background: white;
+            border-radius: 20px;
+            margin-top: 40px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .projects h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #4A154B;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #667eea;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .project-card.featured {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-left: 5px solid #fff;
+        }
+
+        .project-card.featured:hover {
+            background: linear-gradient(135deg, #5a6fd8, #6b42a0);
+        }
+
+        .project-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .project-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .project-card .project-link {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .project-card.featured .project-link {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            .projects {
+                margin-top: 20px;
+                padding: 30px 20px;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <img src="Headshot2.jpg" alt="Nick Gulson" class="profile-img">
+            <h1>Nick Gulson</h1>
+            <p class="tagline">Developer & Student</p>
+            <p class="description">
+                Building useful tools and exploring technology. Currently studying at Northwestern University
+                and creating projects that solve real-world problems.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="Gulson, Nick Kellogg Resume 10.13.25.pdf" download class="btn btn-resume">📄 Download Resume</a>
+                <a href="mailto:nick.gulson@kellogg.northwestern.edu" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <h2>Featured Projects</h2>
+            <div class="project-grid">
+                <div class="project-card featured">
+                    <span class="project-icon">🚌</span>
+                    <h3>Northwestern Shuttle Times</h3>
+                    <p>Real-time bus tracking for Northwestern's intercampus shuttle. Shows live arrival times with a clean, responsive interface. Built with Python backend and modern web technologies.</p>
+                    <div class="project-links">
+                        <a href="/ShuttleTimes/" class="project-link">🚀 Live Demo</a>
+                        <a href="https://github.com/nickgulson11/northwestern-shuttle-times" class="project-link">📱 View Code</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <span class="project-icon">📊</span>
+                    <h3>Excel Data Analyzer</h3>
+                    <p>Web-based tool for analyzing Excel spreadsheets with interactive visualizations. Upload, analyze, and gain insights from your data with an intuitive interface.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link">🔗 Coming Soon</a>
+                        <a href="#" class="project-link">💻 GitHub</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <span class="project-icon">🎮</span>
+                    <h3>Accounting Game</h3>
+                    <p>Interactive educational game for learning accounting principles. Gamifies financial concepts to make learning engaging and accessible.</p>
+                    <div class="project-links">
+                        <a href="https://nickgulson11.github.io/AccountingGame/accounting_game.html" class="project-link">🎯 Play Game</a>
+                        <a href="https://github.com/nickgulson11/AccountingGame" class="project-link">⚡ Source</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <span class="project-icon">🛠️</span>
+                    <h3>More Projects</h3>
+                    <p>Exploring new technologies and building solutions. Check back soon for updates on current experiments with AI, web development, and automation.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/nickgulson11" class="project-link">🔍 Browse All</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://github.com/nickgulson11" class="social-link" title="GitHub">🐙</a>
+            <a href="https://www.linkedin.com/in/nick-gulson/" class="social-link" title="LinkedIn">💼</a>
+            <a href="mailto:nick.gulson@kellogg.northwestern.edu" class="social-link" title="Email">📧</a>
+        </div>
+        <p>&copy; 2025 Nick Gulson. Built with passion and caffeine ☕</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactive animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe project cards for animation
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

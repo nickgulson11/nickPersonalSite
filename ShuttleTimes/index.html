@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northwestern Bus Times</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #4A154B;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .bus-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .bus-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .outbound {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+
+        .inbound {
+            background: linear-gradient(135deg, #4834d4, #686de0);
+            color: white;
+        }
+
+        .bus-section h2 {
+            margin: 0 0 20px 0;
+            font-size: 1.8em;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+        }
+
+        .bus-section h2::before {
+            content: "🚌";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .bus-times {
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 60px;
+        }
+
+        .bus-header {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .bus-time-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .bus-time-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .minutes {
+            background: rgba(255,255,255,0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .status {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .error {
+            background: rgba(231, 76, 60, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .github-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #666;
+        }
+
+        .github-info a {
+            color: #4A154B;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .github-info a:hover {
+            text-decoration: underline;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .loading {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Northwestern Bus Times</h1>
+            <p>Real-time Intercampus Shuttle Information</p>
+        </div>
+
+        <div class="content">
+            <div class="bus-section outbound">
+                <h2>Outbound - To Ward</h2>
+                <div class="bus-times">
+                    <!-- OUTBOUND_DATA_PLACEHOLDER -->
+<div class="bus-header">Next 2 buses arriving at Ward:</div>
+
+                    <div class="bus-time-item">
+                        <span class="time">09:35 PM</span>
+                        <span class="minutes">46 min</span>
+                        <span class="status">OnTime</span>
+                    </div>
+                    
+
+                    <div class="bus-time-item">
+                        <span class="time">10:25 PM</span>
+                        <span class="minutes">96 min</span>
+                        <span class="status">OnTime</span>
+                    </div>
+                    
+                    <!-- END_OUTBOUND_DATA_PLACEHOLDER -->
+                </div>
+            </div>
+
+            <div class="bus-section inbound">
+                <h2>Inbound - From Tech</h2>
+                <div class="bus-times">
+                    <!-- INBOUND_DATA_PLACEHOLDER -->
+<div class="bus-header">Next 1 bus departing from Tech:</div>
+
+                    <div class="bus-time-item">
+                        <span class="time">09:45 PM</span>
+                        <span class="minutes">56 min</span>
+                        <span class="status">OnTime</span>
+                    </div>
+                    
+                    <!-- END_INBOUND_DATA_PLACEHOLDER -->
+                </div>
+            </div>
+
+            <div class="github-info">
+                <strong>🤖 Auto-updated via GitHub Actions</strong><br>
+                💰 Cost-optimized: Updates every 15 minutes (FREE!)<br>
+                <a href="https://github.com/your-username/northwestern-bus-times/actions/workflows/manual-update.yml" target="_blank">🚀 Need Fresh Data? Click Here!</a>
+                | <a href="https://github.com/your-username/northwestern-bus-times" target="_blank">View Code</a>
+            </div>
+
+            <div class="last-updated">
+                Last updated: <!-- TIMESTAMP_PLACEHOLDER -->01:48:59 AM UTC on October 22, 2025<!-- END_TIMESTAMP_PLACEHOLDER -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smart auto-refresh: Check for updates every 5 minutes, but only refresh if needed
+        function checkForUpdates() {
+            // Simple timestamp check - in real use, this would compare against last update time
+            const timestampText = document.querySelector('.last-updated').textContent;
+            const now = new Date();
+
+            // Auto-refresh every 15 minutes to align with GitHub Actions schedule
+            console.log('Checking for bus data updates...');
+            window.location.reload();
+        }
+
+        // Check for updates every 15 minutes (matches GitHub Actions schedule)
+        setInterval(checkForUpdates, 900000); // 15 minutes
+
+        // Add keyboard shortcut for manual refresh
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                window.location.reload();
+            }
+        });
+
+        // Show a subtle indicator when data might be stale
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const timestampText = document.querySelector('.last-updated').textContent;
+                const timeMatch = timestampText.match(/(\d{2}):(\d{2}):(\d{2})/);
+
+                if (timeMatch) {
+                    const now = new Date();
+                    // Simple age check - if it feels old, suggest refresh
+                    console.log('Bus data loaded. Press Ctrl+R to refresh for latest times.');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

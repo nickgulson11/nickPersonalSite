@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northwestern Bus Times - Live Direct</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #4A154B;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .live-badge {
+            display: inline-block;
+            background: #00ff00;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .refresh-controls {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .refresh-controls h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.3em;
+        }
+
+        .refresh-btn {
+            background: rgba(255,255,255,0.9);
+            color: #28a745;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .refresh-btn:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .refresh-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .refresh-btn.loading {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .status-message {
+            margin: 15px 0;
+            font-size: 0.9em;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .status-ready {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .status-loading {
+            background: rgba(255, 193, 7, 0.2);
+            color: #000;
+        }
+
+        .status-success {
+            background: rgba(40, 167, 69, 0.2);
+            color: #000;
+        }
+
+        .status-error {
+            background: rgba(220, 53, 69, 0.2);
+            color: #000;
+        }
+
+        .bus-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .bus-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .outbound {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+
+        .inbound {
+            background: linear-gradient(135deg, #4834d4, #686de0);
+            color: white;
+        }
+
+        .bus-section h2 {
+            margin: 0 0 20px 0;
+            font-size: 1.8em;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+        }
+
+        .bus-section h2::before {
+            content: "🚌";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .bus-times {
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 60px;
+        }
+
+        .bus-header {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .bus-time-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .bus-time-item:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .minutes {
+            background: rgba(255,255,255,0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .status {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .loading {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: rgba(231, 76, 60, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255,255,255,0.8);
+            font-style: italic;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .cost-info {
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .cors-warning {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Northwestern Bus Times</h1>
+            <p>Live Direct Access<span class="live-badge">LIVE</span></p>
+        </div>
+
+        <div class="content">
+            <div class="cost-info">💰 $0/month - Click for live data only!</div>
+
+            <div class="cors-warning" id="cors-warning" style="display: none;">
+                <strong>⚠️ Browser Security Notice:</strong> If refresh fails, your browser may be blocking direct API access.
+                This is normal - try refreshing the page and clicking again.
+            </div>
+
+            <div class="refresh-controls">
+                <h3>🚀 Get Live Bus Times</h3>
+
+                <button onclick="refreshAll()" class="refresh-btn" id="refresh-all">
+                    ⚡ Get Live Times Now
+                </button>
+
+                <button onclick="refreshOutbound()" class="refresh-btn" id="refresh-outbound">
+                    🔄 Outbound Only
+                </button>
+
+                <button onclick="refreshInbound()" class="refresh-btn" id="refresh-inbound">
+                    🔄 Inbound Only
+                </button>
+
+                <div class="status-message status-ready" id="status">
+                    Ready to fetch live data - click above!
+                </div>
+            </div>
+
+            <div class="bus-section outbound">
+                <h2>Outbound - To Ward</h2>
+                <div class="bus-times" id="outbound-times">
+                    <div class="no-data">
+                        Click "Get Live Times Now" above to load fresh data
+                    </div>
+                </div>
+            </div>
+
+            <div class="bus-section inbound">
+                <h2>Inbound - From Tech</h2>
+                <div class="bus-times" id="inbound-times">
+                    <div class="no-data">
+                        Click "Get Live Times Now" above to load fresh data
+                    </div>
+                </div>
+            </div>
+
+            <div class="last-updated">
+                Last updated: <span id="last-updated-time">Click above to load live data</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            routes: {
+                outbound: {
+                    id: "23174203-507c-48fe-811a-5d13fcf7be65",
+                    targetStop: "Ward",
+                    direction: "Outbound",
+                    displayName: "Ward"
+                },
+                inbound: {
+                    id: "EBEE9228-C993-4279-B7CE-8FCA0A46CA65",
+                    targetStop: "Sheridan/Noyes (IB)",
+                    direction: "Inbound",
+                    displayName: "Tech"
+                }
+            },
+            corsProxy: 'https://api.allorigins.win/get?url=',
+            apiTimeout: 15000
+        };
+
+        let isLoading = false;
+
+        // Utility functions
+        function getCurrentDate() {
+            const now = new Date();
+            return now.getFullYear() + '-' +
+                   String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                   String(now.getDate()).padStart(2, '0');
+        }
+
+        function buildApiUrl(routeId) {
+            const currentDate = getCurrentDate();
+            const originalUrl = `https://northwestern.tripshot.com/v2/p/routeSummary/${routeId}?day=${currentDate}&withNavigation=true&embedStops=true`;
+            return CONFIG.corsProxy + encodeURIComponent(originalUrl);
+        }
+
+        function formatTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
+
+        function getMinutesUntil(dateString) {
+            const busTime = new Date(dateString);
+            const now = new Date();
+            const diffMs = busTime - now;
+            const diffMinutes = Math.round(diffMs / (1000 * 60));
+            return diffMinutes;
+        }
+
+        function updateStatus(message, type = 'ready') {
+            const statusElement = document.getElementById('status');
+            statusElement.className = `status-message status-${type}`;
+            statusElement.textContent = message;
+        }
+
+        function setButtonsLoading(loading) {
+            const buttons = ['refresh-all', 'refresh-outbound', 'refresh-inbound'];
+            buttons.forEach(id => {
+                const btn = document.getElementById(id);
+                btn.disabled = loading;
+                if (loading) {
+                    btn.classList.add('loading');
+                    btn.textContent = btn.textContent.replace('⚡', '⏳').replace('🔄', '⏳');
+                } else {
+                    btn.classList.remove('loading');
+                    btn.textContent = btn.textContent.replace('⏳', btn.id === 'refresh-all' ? '⚡' : '🔄');
+                }
+            });
+        }
+
+        function showLoading(containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading live data...
+                </div>
+            `;
+        }
+
+        function displayError(containerId, error) {
+            const container = document.getElementById(containerId);
+            let errorMessage = "Failed to load bus times";
+
+            if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+                errorMessage = "Network error - check connection";
+                document.getElementById('cors-warning').style.display = 'block';
+            } else if (error.message.includes('timeout')) {
+                errorMessage = "Request timed out - try again";
+            }
+
+            container.innerHTML = `
+                <div class="error">
+                    ${errorMessage}
+                </div>
+            `;
+        }
+
+        async function fetchBusData(route) {
+            const url = buildApiUrl(route.id);
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), CONFIG.apiTimeout);
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const proxyData = await response.json();
+                const data = JSON.parse(proxyData.contents);
+
+                return parseBusData(data, route);
+
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    throw new Error('Request timed out');
+                }
+                throw error;
+            }
+        }
+
+        function parseBusData(data, route) {
+            const upcomingBuses = [];
+            const currentTime = new Date();
+            const rides = data.rides || [];
+
+            for (const ride of rides) {
+                const state = ride.state || {};
+                if (!('Active' in state || 'Accepted' in state)) {
+                    continue;
+                }
+
+                if (ride.direction !== route.direction) {
+                    continue;
+                }
+
+                const stopStatus = ride.stopStatus || [];
+
+                for (const stop of stopStatus) {
+                    if ('Awaiting' in stop) {
+                        const stopInfo = stop.Awaiting;
+                        const viaIdx = stopInfo.viaIdx || 0;
+                        const vias = ride.vias || [];
+                        let stopName = "Unknown Stop";
+
+                        if (viaIdx < vias.length && vias[viaIdx].ViaStop) {
+                            stopName = vias[viaIdx].ViaStop.stop.name || "Unknown Stop";
+                        }
+
+                        if (stopName !== route.targetStop) {
+                            continue;
+                        }
+
+                        const expectedArrival = stopInfo.expectedArrivalTime;
+                        if (expectedArrival) {
+                            const departureTime = new Date(expectedArrival);
+
+                            if (departureTime > currentTime) {
+                                upcomingBuses.push({
+                                    vehicleName: ride.vehicleName || 'Unknown',
+                                    departureTime: departureTime,
+                                    riderStatus: stopInfo.riderStatus || 'Unknown',
+                                    minutesUntil: getMinutesUntil(expectedArrival)
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            upcomingBuses.sort((a, b) => a.departureTime - b.departureTime);
+            return upcomingBuses.slice(0, 2);
+        }
+
+        function displayBusData(containerId, buses, route) {
+            const container = document.getElementById(containerId);
+
+            if (buses.length === 0) {
+                container.innerHTML = `
+                    <div class="error">
+                        No upcoming buses found for ${route.displayName}
+                    </div>
+                `;
+                return;
+            }
+
+            const actionWord = route.direction === "Outbound" ? "arriving at" : "departing from";
+            const busesWord = buses.length > 1 ? "buses" : "bus";
+
+            let html = `<div class="bus-header">Next ${buses.length} ${busesWord} ${actionWord} ${route.displayName}:</div>`;
+
+            buses.forEach((bus, index) => {
+                const timeStr = formatTime(bus.departureTime);
+                const minutesText = bus.minutesUntil <= 0 ? "Now" :
+                                  bus.minutesUntil === 1 ? "1 min" : `${bus.minutesUntil} min`;
+
+                html += `
+                    <div class="bus-time-item">
+                        <span>${index + 1}. <span class="time">${timeStr}</span></span>
+                        <span class="minutes">${minutesText}</span>
+                        <span class="status">${bus.riderStatus}</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function updateLastUpdated() {
+            const now = new Date();
+            document.getElementById('last-updated-time').textContent =
+                now.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    second: '2-digit'
+                }) + ' (Live Data)';
+        }
+
+        async function refreshOutbound() {
+            if (isLoading) return;
+
+            showLoading('outbound-times');
+            updateStatus('Fetching live Outbound data...', 'loading');
+
+            try {
+                const buses = await fetchBusData(CONFIG.routes.outbound);
+                displayBusData('outbound-times', buses, CONFIG.routes.outbound);
+                updateStatus('✅ Outbound data refreshed!', 'success');
+            } catch (error) {
+                displayError('outbound-times', error);
+                updateStatus('❌ Failed to load Outbound data', 'error');
+            }
+
+            updateLastUpdated();
+        }
+
+        async function refreshInbound() {
+            if (isLoading) return;
+
+            showLoading('inbound-times');
+            updateStatus('Fetching live Inbound data...', 'loading');
+
+            try {
+                const buses = await fetchBusData(CONFIG.routes.inbound);
+                displayBusData('inbound-times', buses, CONFIG.routes.inbound);
+                updateStatus('✅ Inbound data refreshed!', 'success');
+            } catch (error) {
+                displayError('inbound-times', error);
+                updateStatus('❌ Failed to load Inbound data', 'error');
+            }
+
+            updateLastUpdated();
+        }
+
+        async function refreshAll() {
+            if (isLoading) return;
+
+            isLoading = true;
+            setButtonsLoading(true);
+
+            showLoading('outbound-times');
+            showLoading('inbound-times');
+            updateStatus('Fetching live data for both routes...', 'loading');
+
+            try {
+                const [outboundBuses, inboundBuses] = await Promise.all([
+                    fetchBusData(CONFIG.routes.outbound),
+                    fetchBusData(CONFIG.routes.inbound)
+                ]);
+
+                displayBusData('outbound-times', outboundBuses, CONFIG.routes.outbound);
+                displayBusData('inbound-times', inboundBuses, CONFIG.routes.inbound);
+
+                updateStatus('✅ Live data refreshed for both routes!', 'success');
+
+            } catch (error) {
+                updateStatus('❌ Failed to load some data - try individual refresh', 'error');
+            } finally {
+                isLoading = false;
+                setButtonsLoading(false);
+                updateLastUpdated();
+            }
+        }
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                refreshAll();
+            }
+        });
+
+        // Show initial status
+        window.addEventListener('load', () => {
+            updateStatus('Ready to fetch live data - click above!', 'ready');
+        });
+    </script>
+</body>
+</html>
