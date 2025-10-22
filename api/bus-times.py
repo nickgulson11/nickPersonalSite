@@ -27,7 +27,7 @@ class BusAPIClient:
 
     def parse_bus_times(self, data: Dict) -> List[Dict]:
         upcoming_buses = []
-        current_time = datetime.now(timezone.utc)
+        current_time = datetime.now()
         rides = data.get('rides', [])
 
         for ride in rides:
@@ -60,7 +60,7 @@ class BusAPIClient:
 
                     expected_arrival = stop_info.get('expectedArrivalTime')
                     if expected_arrival:
-                        departure_time = datetime.fromisoformat(expected_arrival.replace('Z', '+00:00'))
+                        departure_time = datetime.fromisoformat(expected_arrival.replace('Z', ''))
 
                         if departure_time > current_time:
                             upcoming_buses.append({
@@ -160,7 +160,7 @@ class handler(BaseHTTPRequestHandler):
                     }
 
             # Add timestamp
-            results['timestamp'] = datetime.now(timezone.utc).strftime('%I:%M:%S %p UTC on %B %d, %Y')
+            results['timestamp'] = datetime.now().strftime('%I:%M:%S %p CST on %B %d, %Y')
 
             # Send response
             self.send_response(200)
@@ -182,7 +182,7 @@ class handler(BaseHTTPRequestHandler):
 
             error_response = json.dumps({
                 'error': str(e),
-                'timestamp': datetime.now(timezone.utc).strftime('%I:%M:%S %p UTC')
+                'timestamp': datetime.now().strftime('%I:%M:%S %p CST')
             })
             self.wfile.write(error_response.encode())
 

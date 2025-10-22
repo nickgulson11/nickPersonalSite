@@ -44,7 +44,7 @@ class BusAPIClient:
     def parse_bus_times(self, data: Dict, filter_target_stop: bool = True) -> List[Dict]:
         """Parse bus data to extract upcoming departure times for target stop"""
         upcoming_buses = []
-        current_time = datetime.now(timezone.utc)
+        current_time = datetime.now()
 
         rides = data.get('rides', [])
 
@@ -88,7 +88,7 @@ class BusAPIClient:
                     scheduled_departure = stop_info.get('scheduledDepartureTime')
 
                     if expected_arrival:
-                        departure_time = datetime.fromisoformat(expected_arrival.replace('Z', '+00:00'))
+                        departure_time = datetime.fromisoformat(expected_arrival.replace('Z', ''))
 
                         # Only include future departures
                         if departure_time > current_time:
