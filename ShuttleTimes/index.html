@@ -359,13 +359,16 @@
 <body>
     <div class="container">
         <div class="header">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <a href="../" class="back-link">← Back to Home</a>
+                <a href="https://github.com/nickgulson11" target="_blank" class="back-link" style="background: rgba(255,255,255,0.3);">💻 GitHub</a>
+            </div>
             <img src="../PurpleBusLogo.png" alt="Purple Bus Logo" class="header-logo">
             <h1>Purple Bus Tracker</h1>
             <p>Intercampus shuttle times used for Nick's daily commute<br> For more info visit <a href="https://northwestern.tripshot.com/" target="_blank" style="color: #fff; text-decoration: underline;">northwestern.tripshot.com</a></p>
         </div>
 
         <div class="content">
-            <a href="/" class="back-link">← Back to Nick's Site</a>
 
             <div class="live-controls">
                 <button onclick="fetchLiveData('both')" class="refresh-btn primary" id="refresh-btn">
