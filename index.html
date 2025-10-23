@@ -16,8 +16,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             min-height: 100vh;
+            background-attachment: fixed;
         }
 
         .container {
@@ -33,19 +34,20 @@
         }
 
         .profile-img {
-            width: 200px;
-            height: 200px;
+            width: 280px;
+            height: 280px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center 20%;
-            border: 5px solid rgba(255,255,255,0.3);
+            border: 6px solid rgba(255,255,255,0.4);
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .profile-img:hover {
-            transform: scale(1.05);
+            transform: scale(1.08) rotate(2deg);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.2);
         }
 
         .hero h1 {
@@ -120,11 +122,13 @@
         }
 
         .projects {
-            background: white;
-            border-radius: 20px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
             margin-top: 40px;
             padding: 50px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .projects h2 {
@@ -141,31 +145,64 @@
         }
 
         .project-card {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border-left: 5px solid #667eea;
             text-decoration: none;
             color: inherit;
             display: block;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
         }
 
         .project-card.featured {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-left: 5px solid #fff;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            color: #333;
+            border: 3px solid #667eea;
+            border-left: 5px solid #667eea;
             text-decoration: none;
+            position: relative;
         }
 
         .project-card.featured:hover {
-            background: linear-gradient(135deg, #5a6fd8, #6b42a0);
+            border-color: #5a6fd8;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+
+        .project-card.featured::after {
+            content: '⭐';
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 1.5em;
+            color: #667eea;
+            z-index: 1;
         }
 
         .project-icon {
@@ -252,7 +289,7 @@
             <div class="project-grid">
                 <a href="/ShuttleTimes/" class="project-card featured">
                     <span class="project-icon">🚌</span>
-                    <h3>Upcoming Intercampus Shuttles</h3>
+                    <h3>Purple Bus Tracker</h3>
                     <p>Real-time bus tracking for Northwestern's intercampus shuttle. Shows live arrival times with a clean, responsive interface. Built with Python backend and modern web technologies.</p>
                 </a>
 
