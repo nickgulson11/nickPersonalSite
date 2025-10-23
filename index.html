@@ -16,9 +16,87 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: linear-gradient(135deg, #2c3e50 0%, #4a5568 30%, #718096 70%, #e2e8f0 100%);
             min-height: 100vh;
             background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Rotating background images */
+        .bg-images {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.15;
+        }
+
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .bg-image.active {
+            opacity: 1;
+        }
+
+        /* Floating personal images */
+        .floating-images {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-img {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            opacity: 0.4;
+            animation: float 25s infinite linear;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .floating-img.left-side {
+            left: 2%;
+        }
+
+        .floating-img.right-side {
+            right: 2%;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            10% { transform: translateY(-20px) rotate(360deg); }
+            15% { transform: translateY(-20px) rotate(360deg); }
+            25% { transform: translateY(10px) rotate(720deg); }
+            30% { transform: translateY(10px) rotate(720deg); }
+            40% { transform: translateY(-30px) rotate(1080deg); }
+            45% { transform: translateY(-30px) rotate(1080deg); }
+            55% { transform: translateY(5px) rotate(1440deg); }
+            60% { transform: translateY(5px) rotate(1440deg); }
+            70% { transform: translateY(-15px) rotate(1800deg); }
+            75% { transform: translateY(-15px) rotate(1800deg); }
+            85% { transform: translateY(-5px) rotate(2160deg); }
+            90% { transform: translateY(-5px) rotate(2160deg); }
+            100% { transform: translateY(0px) rotate(2520deg); }
         }
 
         .container {
@@ -88,7 +166,7 @@
 
         .btn-primary {
             background: white;
-            color: #667eea;
+            color: #2c3e50;
         }
 
         .btn-primary:hover {
@@ -121,6 +199,7 @@
             box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
         }
 
+
         .projects {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(20px);
@@ -135,7 +214,7 @@
             text-align: center;
             font-size: 2.5em;
             margin-bottom: 40px;
-            color: #4A154B;
+            color: #2c3e50;
         }
 
         .project-grid {
@@ -150,7 +229,7 @@
             padding: 32px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.12);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-left: 5px solid #667eea;
+            border-left: 5px solid #4a5568;
             text-decoration: none;
             color: inherit;
             display: block;
@@ -171,7 +250,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
+            background: linear-gradient(135deg, rgba(44,62,80,0.05), rgba(74,85,104,0.05));
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
@@ -184,15 +263,15 @@
         .project-card.featured {
             background: linear-gradient(135deg, #ffffff, #f8f9fa);
             color: #333;
-            border: 3px solid #667eea;
-            border-left: 5px solid #667eea;
+            border: 3px solid #4a5568;
+            border-left: 5px solid #4a5568;
             text-decoration: none;
             position: relative;
         }
 
         .project-card.featured:hover {
-            border-color: #5a6fd8;
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+            border-color: #2c3e50;
+            box-shadow: 0 20px 60px rgba(74, 85, 104, 0.3);
         }
 
         .project-card.featured::after {
@@ -201,7 +280,7 @@
             top: 16px;
             right: 16px;
             font-size: 1.5em;
-            color: #667eea;
+            color: #4a5568;
             z-index: 1;
         }
 
@@ -251,6 +330,16 @@
                 font-size: 2.2em;
             }
 
+            .hero .description {
+                font-size: 1em;
+                padding: 0 10px;
+            }
+
+            .profile-img {
+                width: 220px;
+                height: 220px;
+            }
+
             .projects {
                 margin-top: 20px;
                 padding: 30px 20px;
@@ -263,11 +352,71 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+                gap: 15px;
+            }
+
+            .floating-img {
+                width: 80px;
+                height: 80px;
+                opacity: 0.25;
+                animation-duration: 35s !important;
+            }
+
+            .bg-images {
+                opacity: 0.08;
+            }
+
+            .projects h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8em;
+            }
+
+            .hero .tagline {
+                font-size: 1.1em;
+            }
+
+            .hero .description {
+                font-size: 0.95em;
+                margin-bottom: 30px;
+            }
+
+            .profile-img {
+                width: 180px;
+                height: 180px;
+                margin-bottom: 20px;
+            }
+
+            .floating-img {
+                display: none;
+            }
+
+            .bg-images {
+                opacity: 0.05;
+            }
+
+            .projects {
+                padding: 20px 15px;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9em;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Rotating background images -->
+    <div class="bg-images" id="bgImages"></div>
+
+    <!-- Floating personal images -->
+    <div class="floating-images" id="floatingImages"></div>
+
     <div class="container">
         <section class="hero">
             <img src="Headshot2.jpg" alt="Nick Gulson" class="profile-img">
@@ -325,6 +474,133 @@
     </footer>
 
     <script>
+        // Personal images array
+        const personalImages = [
+            'Images/46792ED6-FF8E-40C2-B669-8F874DF37212_1_105_c.jpeg',
+            'Images/7D73AF25-BD5F-4965-A118-6CD0327888FC_1_105_c.jpeg',
+            'Images/95F8A113-BE56-47E8-95AF-AF03A0ACA101_1_105_c.jpeg',
+            'Images/A2A59BB5-C8BD-4BAE-9C9C-4BB33E3CBF11_4_5005_c.jpeg',
+            'Images/A9A931AD-FAD9-4B00-9DCC-C4AEAB3A67AD_1_102_o.jpeg',
+            'Images/E707FFD0-603A-45B0-B1B3-722B25DBB750_1_105_c.jpeg',
+            'Images/EEA5A71B-94C6-439C-97FC-6D7641690C22.jpeg',
+            'Images/F84E9E26-E256-4810-AA81-65CE2DE515AF_1_102_o.jpeg',
+            'Images/IMG_3835.jpeg',
+            'Images/IMG_4517.jpeg'
+        ];
+
+        // Image descriptions for moments
+        const imageDescriptions = [
+            'Adventure time',
+            'Making memories',
+            'Good vibes',
+            'Living life',
+            'Great moments',
+            'Fun times',
+            'Beautiful day',
+            'Special moment',
+            'Happy times',
+            'Life is good'
+        ];
+
+        // Initialize rotating background images with smart positioning
+        function initBackgroundImages() {
+            const bgContainer = document.getElementById('bgImages');
+            let currentIndex = 0;
+
+            personalImages.forEach((img, index) => {
+                const bgDiv = document.createElement('div');
+                bgDiv.className = 'bg-image';
+                bgDiv.style.backgroundImage = `url('${img}')`;
+
+                // Create a temporary image to detect dimensions
+                const tempImg = new Image();
+                tempImg.onload = function() {
+                    const aspectRatio = this.width / this.height;
+
+                    if (aspectRatio < 1) {
+                        // Portrait image - focus on upper portion for faces
+                        bgDiv.style.backgroundPosition = 'center 25%';
+                    } else if (aspectRatio > 1.5) {
+                        // Wide landscape - center works fine
+                        bgDiv.style.backgroundPosition = 'center center';
+                    } else {
+                        // Square-ish or mild landscape - slightly favor top
+                        bgDiv.style.backgroundPosition = 'center 40%';
+                    }
+                };
+                tempImg.src = img;
+
+                if (index === 0) bgDiv.classList.add('active');
+                bgContainer.appendChild(bgDiv);
+            });
+
+            // Rotate background images every 8 seconds
+            setInterval(() => {
+                const current = bgContainer.querySelector('.bg-image.active');
+                current.classList.remove('active');
+
+                currentIndex = (currentIndex + 1) % personalImages.length;
+                const next = bgContainer.children[currentIndex];
+                next.classList.add('active');
+            }, 8000);
+        }
+
+        // Initialize floating images (2 left, 2 right) with no overlap
+        function initFloatingImages() {
+            const floatingContainer = document.getElementById('floatingImages');
+            const numFloating = Math.min(4, personalImages.length);
+            const leftPositions = [];
+            const rightPositions = [];
+            const minSpacing = 25; // Minimum spacing between images (in vh)
+
+            // Function to check if a position overlaps with existing positions
+            function isValidPosition(newTop, existingPositions, minSpacing) {
+                return existingPositions.every(existingTop =>
+                    Math.abs(newTop - existingTop) >= minSpacing
+                );
+            }
+
+            // Function to generate a valid position
+            function getValidPosition(existingPositions, minTop, maxTop, minSpacing) {
+                let attempts = 0;
+                let newTop;
+
+                do {
+                    newTop = minTop + Math.random() * (maxTop - minTop);
+                    attempts++;
+                } while (!isValidPosition(newTop, existingPositions, minSpacing) && attempts < 50);
+
+                return newTop;
+            }
+
+            for (let i = 0; i < numFloating; i++) {
+                const img = document.createElement('img');
+                img.src = personalImages[i];
+                img.className = 'floating-img';
+
+                let topPosition;
+
+                // Assign to left or right side with collision detection
+                if (i < 2) {
+                    img.classList.add('left-side');
+                    topPosition = getValidPosition(leftPositions, 15, 65, minSpacing);
+                    leftPositions.push(topPosition);
+                } else {
+                    img.classList.add('right-side');
+                    topPosition = getValidPosition(rightPositions, 20, 70, minSpacing);
+                    rightPositions.push(topPosition);
+                }
+
+                img.style.top = topPosition + '%';
+
+                // Staggered delays with more variation
+                img.style.animationDelay = (i * 5 + Math.random() * 8) + 's';
+                img.style.animationDuration = (30 + Math.random() * 20) + 's';
+                floatingContainer.appendChild(img);
+            }
+        }
+
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -354,12 +630,30 @@
             });
         }, observerOptions);
 
-        // Observe project cards for animation
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initBackgroundImages();
+            initFloatingImages();
+
+            // Observe all cards for animation
+            setTimeout(() => {
+                document.querySelectorAll('.project-card').forEach(card => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(card);
+                });
+            }, 100);
+        });
+
+        // Performance optimization: Pause animations when page is not visible
+        document.addEventListener('visibilitychange', function() {
+            const floatingImages = document.querySelectorAll('.floating-img');
+            if (document.hidden) {
+                floatingImages.forEach(img => img.style.animationPlayState = 'paused');
+            } else {
+                floatingImages.forEach(img => img.style.animationPlayState = 'running');
+            }
         });
     </script>
 </body>

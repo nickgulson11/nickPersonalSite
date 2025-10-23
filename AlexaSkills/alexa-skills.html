@@ -16,7 +16,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: linear-gradient(135deg, #2c3e50 0%, #4a5568 30%, #718096 70%, #e2e8f0 100%);
             min-height: 100vh;
             background-attachment: fixed;
         }
@@ -73,6 +73,142 @@
             transform: translateY(-2px);
         }
 
+        /* Demo Chat Section */
+        .demo-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .chat-container {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #00d4ff, #5b86e5);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .alexa-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .alexa-logo {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .chat-messages {
+            padding: 25px;
+            height: 280px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .message.alexa .message-avatar {
+            background: linear-gradient(135deg, #00d4ff, #5b86e5);
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #4a5568, #2c3e50);
+            color: white;
+        }
+
+        .message-content {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 20px;
+            max-width: 70%;
+            position: relative;
+        }
+
+        .message.alexa .message-content {
+            background: linear-gradient(135deg, #e3f2fd, #f0f7ff);
+            border: 1px solid rgba(0,212,255,0.2);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            border: 1px solid rgba(74,85,104,0.2);
+        }
+
+        .typing-indicator {
+            display: inline-block;
+        }
+
+        .typing-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00d4ff;
+            margin: 0 2px;
+            animation: typingBounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         .skills-section {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(20px);
@@ -113,7 +249,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
+            background: linear-gradient(135deg, rgba(44,62,80,0.05), rgba(74,85,104,0.05));
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
@@ -127,17 +263,17 @@
             font-size: 3em;
             margin-bottom: 20px;
             display: block;
-            color: #667eea;
+            color: #4a5568;
         }
 
         .skill-card h3 {
             font-size: 1.8em;
             margin-bottom: 15px;
-            color: #4A154B;
+            color: #2c3e50;
         }
 
         .skill-card .skill-type {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #4a5568, #2c3e50);
             color: white;
             padding: 4px 12px;
             border-radius: 12px;
@@ -168,7 +304,7 @@
         }
 
         .skill-features h4 {
-            color: #667eea;
+            color: #4a5568;
             margin-bottom: 10px;
             font-size: 1.1em;
         }
@@ -204,6 +340,21 @@
                 font-size: 2.2em;
             }
 
+            .demo-section {
+                margin: 20px auto;
+                padding: 0 10px;
+            }
+
+            .chat-messages {
+                padding: 20px;
+                height: 250px;
+            }
+
+            .message-content {
+                max-width: 85%;
+                padding: 12px 16px;
+            }
+
             .skills-section {
                 margin-top: 20px;
                 padding: 30px 20px;
@@ -227,11 +378,22 @@
                 <a href="../" class="back-btn">← Back to Home</a>
                 <a href="https://github.com/nickgulson11" target="_blank" class="back-btn" style="background: rgba(255,255,255,0.3);">💻 GitHub</a>
             </div>
-            <h1>Alexa Custom Skills</h1>
-            <p class="subtitle">Voice-First Applications for Amazon Alexa</p>
-            <p class="description">
-                A collection of custom Alexa skills I've developed, showcasing voice interaction design, natural language processing, and integration with various APIs and services. Each skill demonstrates different aspects of voice user interface design and backend development.
-            </p>
+            <h1>Nick's Custom Amazon Alexa Skills</h1>
+        </section>
+
+        <section class="demo-section">
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-header">
+                    <div class="alexa-indicator">
+                        <img src="1200px-Amazon_Alexa_blue_logo.svg.png" alt="Alexa Logo" class="alexa-logo">
+                        <span>Amazon Alexa</span>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.9;">
+                        You can speak with Alexa on any Alexa device or as a chatbot in the Alexa app
+                    </p>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+            </div>
         </section>
 
         <section class="skills-section">
@@ -304,6 +466,152 @@
     </footer>
 
     <script>
+        // Chat conversation data
+        const conversation = [
+            { type: 'alexa', text: 'Hi, what can I do for you today?' },
+            { type: 'user', text: 'What is a custom Alexa skill?' },
+            { type: 'alexa', text: 'Custom Alexa skills allow you to trigger your own conversations with Alexa and customize the response based on configured parameters in the Alexa console or based on AWS Lambda functions.' },
+            { type: 'user', text: 'How do they work?' },
+            { type: 'alexa', text: 'When you invoke a skill, Alexa processes your speech, sends the intent to your backend service, and your code returns a response that Alexa speaks back to you.' },
+            { type: 'user', text: 'Show me Nick\'s skills!' },
+            { type: 'alexa', text: 'Sure! Nick has built several custom skills including an apartment scraper, a compliment generator, and a Chicago transit tracker. Check them out below!' }
+        ];
+
+        let messageIndex = 0;
+        let isTyping = false;
+
+        function typeText(element, text, speed = 30) {
+            return new Promise(resolve => {
+                let index = 0;
+                element.textContent = '';
+
+                function typeChar() {
+                    if (index < text.length) {
+                        element.textContent += text.charAt(index);
+                        index++;
+                        setTimeout(typeChar, speed);
+                    } else {
+                        resolve();
+                    }
+                }
+                typeChar();
+            });
+        }
+
+        function typeTextWithScroll(element, text, container, speed = 25) {
+            return new Promise(resolve => {
+                let index = 0;
+                element.textContent = '';
+
+                function typeChar() {
+                    if (index < text.length) {
+                        element.textContent += text.charAt(index);
+                        index++;
+
+                        // Scroll every few characters to keep text visible
+                        if (index % 3 === 0) {
+                            container.scrollTop = container.scrollHeight;
+                        }
+
+                        setTimeout(typeChar, speed);
+                    } else {
+                        // Final scroll to ensure everything is visible
+                        container.scrollTop = container.scrollHeight;
+                        resolve();
+                    }
+                }
+                typeChar();
+            });
+        }
+
+        function showTypingIndicator() {
+            const chatMessages = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message alexa typing-message';
+            typingDiv.innerHTML = `
+                <div class="message-avatar">🔵</div>
+                <div class="message-content">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return typingDiv;
+        }
+
+        function removeTypingIndicator(typingDiv) {
+            if (typingDiv && typingDiv.parentNode) {
+                typingDiv.parentNode.removeChild(typingDiv);
+            }
+        }
+
+        async function addMessage(type, text) {
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Show typing indicator for Alexa messages
+            let typingDiv = null;
+            if (type === 'alexa') {
+                typingDiv = showTypingIndicator();
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                removeTypingIndicator(typingDiv);
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const avatar = type === 'alexa' ? '🔵' : '👤';
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">
+                    <span class="message-text"></span>
+                </div>
+            `;
+
+            chatMessages.appendChild(messageDiv);
+
+            // Scroll to bottom immediately
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 50);
+
+            const textElement = messageDiv.querySelector('.message-text');
+
+            if (type === 'user') {
+                // Users speak instantly
+                textElement.textContent = text;
+                // Ensure scroll after text appears
+                setTimeout(() => {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 100);
+            } else {
+                // Alexa types out responses with continuous scrolling
+                await typeTextWithScroll(textElement, text, chatMessages, 25);
+            }
+
+            return new Promise(resolve => setTimeout(resolve, 600));
+        }
+
+        async function startChatDemo() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            messageIndex = 0;
+
+            while (messageIndex < conversation.length) {
+                const message = conversation[messageIndex];
+                await addMessage(message.type, message.text);
+                messageIndex++;
+            }
+
+            // Restart after completion
+            setTimeout(() => {
+                startChatDemo();
+            }, 5000);
+        }
+
         // Smooth scrolling and animations
         const observerOptions = {
             threshold: 0.1,
@@ -315,21 +623,35 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+
+                    // Start chat demo when it comes into view
+                    if (entry.target.id === 'chatContainer' && !isTyping) {
+                        isTyping = true;
+                        setTimeout(() => startChatDemo(), 500);
+                    }
                 }
             });
         }, observerOptions);
 
-        // Observe skill cards for animation
-        document.querySelectorAll('.skill-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
+        // Observe skill cards and chat container for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.skill-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
 
-        // Add staggered animation delay
-        document.querySelectorAll('.skill-card').forEach((card, index) => {
-            card.style.transitionDelay = `${index * 0.2}s`;
+            // Add staggered animation delay
+            document.querySelectorAll('.skill-card').forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.2}s`;
+            });
+
+            // Observe chat container
+            const chatContainer = document.getElementById('chatContainer');
+            if (chatContainer) {
+                observer.observe(chatContainer);
+            }
         });
     </script>
 </body>
