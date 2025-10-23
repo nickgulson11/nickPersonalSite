@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexa Custom Skills - Nick Gulson</title>
+    <link rel="icon" type="image/png" href="PurpleBusLogo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .header .description {
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-2px);
+        }
+
+        .skills-section {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            margin-top: 20px;
+            padding: 50px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+
+        .skill-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+            color: #667eea;
+        }
+
+        .skill-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #4A154B;
+        }
+
+        .skill-card .skill-type {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .skill-card p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+
+        .skill-screenshot {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .skill-features {
+            margin-top: 20px;
+        }
+
+        .skill-features h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .skill-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .skill-features li {
+            padding: 6px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .skill-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: rgba(255,255,255,0.8);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .skills-section {
+                margin-top: 20px;
+                padding: 30px 20px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .skill-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="header">
+            <a href="/" class="back-btn">← Back to Home</a>
+            <h1>Alexa Custom Skills</h1>
+            <p class="subtitle">Voice-First Applications for Amazon Alexa</p>
+            <p class="description">
+                A collection of custom Alexa skills I've developed, showcasing voice interaction design, natural language processing, and integration with various APIs and services. Each skill demonstrates different aspects of voice user interface design and backend development.
+            </p>
+        </section>
+
+        <section class="skills-section">
+            <div class="skills-grid">
+                <!-- Skill 1 Template -->
+                <div class="skill-card">
+                    <span class="skill-icon">💕</span>
+                    <div class="skill-type">Personal Assistant</div>
+                    <h3>Compliment Generator</h3>
+                    <p>An Alexa skill that generates personalized compliments using AI. Features natural language generation to create unique, heartfelt compliments tailored to different relationships and occasions.</p>
+
+                    <!-- Placeholder for screenshot -->
+                    <div style="background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 12px; padding: 40px; text-align: center; color: #6c757d; margin: 20px 0;">
+                        <span style="font-size: 2em;">📱</span>
+                        <p>Screenshot placeholder</p>
+                    </div>
+
+                    <div class="skill-features">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>AI-powered compliment generation</li>
+                            <li>Personalized content based on relationships</li>
+                            <li>Natural voice interaction</li>
+                            <li>Multiple compliment categories</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Skill 2 Template -->
+                <div class="skill-card">
+                    <span class="skill-icon">🎯</span>
+                    <div class="skill-type">Utility</div>
+                    <h3>Skill Template #2</h3>
+                    <p>Description of your second Alexa skill will go here. This template provides a consistent structure for showcasing the functionality, features, and technical implementation of your voice applications.</p>
+
+                    <!-- Placeholder for screenshot -->
+                    <div style="background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 12px; padding: 40px; text-align: center; color: #6c757d; margin: 20px 0;">
+                        <span style="font-size: 2em;">📱</span>
+                        <p>Screenshot placeholder</p>
+                    </div>
+
+                    <div class="skill-features">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>Feature 1 placeholder</li>
+                            <li>Feature 2 placeholder</li>
+                            <li>Feature 3 placeholder</li>
+                            <li>Feature 4 placeholder</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Skill 3 Template -->
+                <div class="skill-card">
+                    <span class="skill-icon">🚀</span>
+                    <div class="skill-type">Entertainment</div>
+                    <h3>Skill Template #3</h3>
+                    <p>Description of your third Alexa skill will go here. Each skill card can be customized with different icons, categories, and feature lists to best represent your unique voice applications.</p>
+
+                    <!-- Placeholder for screenshot -->
+                    <div style="background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 12px; padding: 40px; text-align: center; color: #6c757d; margin: 20px 0;">
+                        <span style="font-size: 2em;">📱</span>
+                        <p>Screenshot placeholder</p>
+                    </div>
+
+                    <div class="skill-features">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>Feature 1 placeholder</li>
+                            <li>Feature 2 placeholder</li>
+                            <li>Feature 3 placeholder</li>
+                            <li>Feature 4 placeholder</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Nick Gulson. Built with caffeine and Claude Code ☕</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling and animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe skill cards for animation
+        document.querySelectorAll('.skill-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add staggered animation delay
+        document.querySelectorAll('.skill-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.2}s`;
+        });
+    </script>
+</body>
+</html>
