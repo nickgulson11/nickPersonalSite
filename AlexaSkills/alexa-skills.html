@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alexa Custom Skills - Nick Gulson</title>
-    <link rel="icon" type="image/png" href="PurpleBusLogo.png">
+    <link rel="icon" type="image/png" href="../PurpleBusLogo.png">
     <style>
         * {
             margin: 0;
@@ -55,15 +55,16 @@
         .back-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
+            gap: 6px;
+            padding: 6px 12px;
             background: rgba(255,255,255,0.2);
             color: white;
             text-decoration: none;
-            border-radius: 25px;
+            border-radius: 15px;
             border: 2px solid rgba(255,255,255,0.4);
             transition: all 0.3s ease;
             margin-bottom: 20px;
+            font-size: 0.8em;
         }
 
         .back-btn:hover {
@@ -222,7 +223,10 @@
 <body>
     <div class="container">
         <section class="header">
-            <a href="/" class="back-btn">← Back to Home</a>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <a href="../" class="back-btn">← Back to Home</a>
+                <a href="https://github.com/nickgulson11" target="_blank" class="back-btn" style="background: rgba(255,255,255,0.3);">💻 GitHub</a>
+            </div>
             <h1>Alexa Custom Skills</h1>
             <p class="subtitle">Voice-First Applications for Amazon Alexa</p>
             <p class="description">
@@ -232,74 +236,62 @@
 
         <section class="skills-section">
             <div class="skills-grid">
-                <!-- Skill 1 Template -->
+                <!-- Apartment Scraper Skill -->
+                <div class="skill-card">
+                    <span class="skill-icon">🏠</span>
+                    <div class="skill-type">Utility</div>
+                    <h3>Apartment Scraper</h3>
+                    <p>A daily web scraping Alexa skill that monitored my target apartment building's listing page and provided voice updates on available units. This skill helped me stay on top of new listings and ultimately land my current apartment!</p>
+
+                    <img src="Atwater.PNG" alt="Apartment Scraper Alexa Skill Screenshot" class="skill-screenshot">
+
+                    <div class="skill-features">
+                        <h4>Key Features:</h4>
+                        <ul>
+                            <li>Daily automated web scraping</li>
+                            <li>Voice-activated apartment availability updates</li>
+                            <li>Real-time listing notifications</li>
+                            <li>Successfully helped secure current apartment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Compliment my Girlfriend Skill -->
                 <div class="skill-card">
                     <span class="skill-icon">💕</span>
                     <div class="skill-type">Personal Assistant</div>
-                    <h3>Compliment Generator</h3>
-                    <p>An Alexa skill that generates personalized compliments using AI. Features natural language generation to create unique, heartfelt compliments tailored to different relationships and occasions.</p>
+                    <h3>Compliment my Girlfriend</h3>
+                    <p>Making the boyfriend's life easier by integrating with ChatGPT to generate thoughtful, personalized compliments for my girlfriend. Sweet tech meets thoughtful gestures in this voice-activated relationship helper.</p>
 
-                    <!-- Placeholder for screenshot -->
-                    <div style="background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 12px; padding: 40px; text-align: center; color: #6c757d; margin: 20px 0;">
-                        <span style="font-size: 2em;">📱</span>
-                        <p>Screenshot placeholder</p>
-                    </div>
+                    <img src="Compliment.PNG" alt="Compliment my Girlfriend Alexa Skill Screenshot" class="skill-screenshot">
 
                     <div class="skill-features">
                         <h4>Key Features:</h4>
                         <ul>
-                            <li>AI-powered compliment generation</li>
-                            <li>Personalized content based on relationships</li>
-                            <li>Natural voice interaction</li>
-                            <li>Multiple compliment categories</li>
+                            <li>ChatGPT integration for AI-generated compliments</li>
+                            <li>Personalized and thoughtful messaging</li>
+                            <li>Voice-activated convenience</li>
+                            <li>Relationship enhancement through technology</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Skill 2 Template -->
+                <!-- Transit Tracker Skill -->
                 <div class="skill-card">
-                    <span class="skill-icon">🎯</span>
-                    <div class="skill-type">Utility</div>
-                    <h3>Skill Template #2</h3>
-                    <p>Description of your second Alexa skill will go here. This template provides a consistent structure for showcasing the functionality, features, and technical implementation of your voice applications.</p>
+                    <span class="skill-icon">🚇</span>
+                    <div class="skill-type">Transportation</div>
+                    <h3>Transit Tracker</h3>
+                    <p>Connects to the Chicago CTA API to provide real-time arrival information for buses and trains at my nearby stops. Perfect for Chicago commuters who want hands-free transit updates through voice commands.</p>
 
-                    <!-- Placeholder for screenshot -->
-                    <div style="background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 12px; padding: 40px; text-align: center; color: #6c757d; margin: 20px 0;">
-                        <span style="font-size: 2em;">📱</span>
-                        <p>Screenshot placeholder</p>
-                    </div>
+                    <img src="TransitTracker.PNG" alt="Transit Tracker Alexa Skill Screenshot" class="skill-screenshot">
 
                     <div class="skill-features">
                         <h4>Key Features:</h4>
                         <ul>
-                            <li>Feature 1 placeholder</li>
-                            <li>Feature 2 placeholder</li>
-                            <li>Feature 3 placeholder</li>
-                            <li>Feature 4 placeholder</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Skill 3 Template -->
-                <div class="skill-card">
-                    <span class="skill-icon">🚀</span>
-                    <div class="skill-type">Entertainment</div>
-                    <h3>Skill Template #3</h3>
-                    <p>Description of your third Alexa skill will go here. Each skill card can be customized with different icons, categories, and feature lists to best represent your unique voice applications.</p>
-
-                    <!-- Placeholder for screenshot -->
-                    <div style="background: #f8f9fa; border: 2px dashed #dee2e6; border-radius: 12px; padding: 40px; text-align: center; color: #6c757d; margin: 20px 0;">
-                        <span style="font-size: 2em;">📱</span>
-                        <p>Screenshot placeholder</p>
-                    </div>
-
-                    <div class="skill-features">
-                        <h4>Key Features:</h4>
-                        <ul>
-                            <li>Feature 1 placeholder</li>
-                            <li>Feature 2 placeholder</li>
-                            <li>Feature 3 placeholder</li>
-                            <li>Feature 4 placeholder</li>
+                            <li>Real-time CTA API integration</li>
+                            <li>Bus and train arrival predictions</li>
+                            <li>Nearby stop identification</li>
+                            <li>Voice-activated transit planning</li>
                         </ul>
                     </div>
                 </div>
