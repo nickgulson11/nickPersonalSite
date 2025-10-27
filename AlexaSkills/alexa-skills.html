@@ -221,7 +221,7 @@
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             margin-top: 30px;
         }
@@ -335,14 +335,33 @@
             margin-top: 40px;
         }
 
+        @media (max-width: 600px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.2em;
             }
 
+            .header .description {
+                padding: 0 15px;
+                font-size: 1em;
+                line-height: 1.7;
+            }
+
+            .back-btn {
+                padding: 8px 14px;
+                font-size: 0.85em;
+                min-height: 36px;
+            }
+
             .demo-section {
                 margin: 20px auto;
-                padding: 0 10px;
+                padding: 0 15px;
             }
 
             .chat-messages {
@@ -362,11 +381,114 @@
 
             .skills-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 25px;
             }
 
             .skill-card {
-                padding: 24px;
+                padding: 28px;
+            }
+
+            .skill-card h3 {
+                font-size: 1.6em;
+                margin-bottom: 12px;
+            }
+
+            .skill-card p {
+                font-size: 0.95em;
+                line-height: 1.6;
+                margin-bottom: 18px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+                margin-bottom: 8px;
+            }
+
+            .header .subtitle {
+                font-size: 1.1em;
+                margin-bottom: 15px;
+            }
+
+            .header .description {
+                font-size: 0.95em;
+                padding: 0 10px;
+                line-height: 1.7;
+            }
+
+            .back-btn {
+                padding: 8px 12px;
+                font-size: 0.8em;
+                min-height: 40px;
+            }
+
+            .demo-section {
+                margin: 15px auto;
+                padding: 0 10px;
+            }
+
+            .chat-container {
+                border-radius: 18px;
+            }
+
+            .chat-messages {
+                padding: 15px;
+                height: 220px;
+            }
+
+            .message-content {
+                padding: 10px 14px;
+                max-width: 90%;
+                font-size: 0.9em;
+            }
+
+            .skills-section {
+                padding: 25px 15px;
+                margin-top: 15px;
+                border-radius: 20px;
+            }
+
+            .skills-grid {
+                gap: 20px;
+            }
+
+            .skill-card {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .skill-card h3 {
+                font-size: 1.4em;
+                margin-bottom: 10px;
+            }
+
+            .skill-card p {
+                font-size: 0.9em;
+                line-height: 1.6;
+                margin-bottom: 16px;
+            }
+
+            .skill-features li {
+                font-size: 0.9em;
+                padding: 5px 0;
+            }
+
+            .skill-screenshot {
+                max-width: 250px;
+                margin: 15px 0;
+            }
+
+            .container {
+                padding: 10px;
             }
         }
     </style>

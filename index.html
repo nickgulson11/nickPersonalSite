@@ -219,7 +219,7 @@
 
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
@@ -332,7 +332,8 @@
 
             .hero .description {
                 font-size: 1em;
-                padding: 0 10px;
+                padding: 0 15px;
+                margin-bottom: 35px;
             }
 
             .profile-img {
@@ -347,18 +348,33 @@
 
             .project-grid {
                 grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .project-card {
+                padding: 28px;
             }
 
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
-                gap: 15px;
+                gap: 12px;
+                margin-top: 25px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+                padding: 16px 30px;
+                min-height: 48px;
+                font-size: 1em;
             }
 
             .floating-img {
                 width: 80px;
                 height: 80px;
-                opacity: 0.25;
+                opacity: 0.2;
                 animation-duration: 35s !important;
             }
 
@@ -368,21 +384,51 @@
 
             .projects h2 {
                 font-size: 2em;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .floating-img {
+                width: 70px;
+                height: 70px;
+                opacity: 0.15;
+            }
+
+            .floating-img.left-side {
+                left: 1%;
+            }
+
+            .floating-img.right-side {
+                right: 1%;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
         }
 
         @media (max-width: 480px) {
+            .hero {
+                padding: 40px 0 50px;
+            }
+
             .hero h1 {
                 font-size: 1.8em;
+                margin-bottom: 8px;
             }
 
             .hero .tagline {
                 font-size: 1.1em;
+                margin-bottom: 25px;
             }
 
             .hero .description {
                 font-size: 0.95em;
                 margin-bottom: 30px;
+                padding: 0 20px;
+                line-height: 1.7;
             }
 
             .profile-img {
@@ -400,12 +446,44 @@
             }
 
             .projects {
-                padding: 20px 15px;
+                padding: 25px 15px;
+                margin-top: 15px;
+                border-radius: 20px;
+            }
+
+            .projects h2 {
+                font-size: 1.8em;
+                margin-bottom: 25px;
+            }
+
+            .project-grid {
+                gap: 20px;
+            }
+
+            .project-card {
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+
+            .project-card h3 {
+                font-size: 1.3em;
+                margin-bottom: 12px;
+            }
+
+            .project-card p {
+                font-size: 0.9em;
+                line-height: 1.6;
             }
 
             .btn {
-                padding: 12px 24px;
-                font-size: 0.9em;
+                padding: 14px 24px;
+                font-size: 0.95em;
+                min-height: 50px;
+                border-radius: 25px;
+            }
+
+            .container {
+                padding: 15px;
             }
         }
     </style>
