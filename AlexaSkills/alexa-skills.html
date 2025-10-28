@@ -317,15 +317,19 @@
         .skill-features li {
             padding: 6px 0;
             position: relative;
-            padding-left: 20px;
+            padding-left: 24px;
+            line-height: 1.5;
         }
 
         .skill-features li::before {
             content: '✓';
             position: absolute;
             left: 0;
+            top: 6px;
             color: #28a745;
             font-weight: bold;
+            width: 18px;
+            text-align: center;
         }
 
         .footer {
@@ -480,6 +484,14 @@
             .skill-features li {
                 font-size: 0.9em;
                 padding: 5px 0;
+                padding-left: 30px;
+                line-height: 1.7;
+            }
+
+            .skill-features li::before {
+                top: 5px;
+                width: 22px;
+                font-size: 0.9em;
             }
 
             .skill-screenshot {
