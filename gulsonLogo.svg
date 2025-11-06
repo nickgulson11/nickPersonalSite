@@ -1,0 +1,19 @@
+<svg width="512" height="512" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-bg-vibrant-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a73ea;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#573a9c;stop-opacity:0.15" />
+    </linearGradient>
+    <linearGradient id="grad-border-vibrant-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a73ea;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#573a9c;stop-opacity:0.4" />
+    </linearGradient>
+    <linearGradient id="grad-text-vibrant-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a73ea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#573a9c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#1a1a1a"/>
+  <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#grad-bg-vibrant-border)" stroke="url(#grad-border-vibrant-border)" stroke-width="1.5"/>
+  <text x="16" y="21" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="900" fill="url(#grad-text-vibrant-border)" text-anchor="middle" letter-spacing="-0.5">NG</text>
+</svg>
