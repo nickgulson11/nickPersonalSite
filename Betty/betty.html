@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betty - Slack Betting Bot - Nick Gulson</title>
+    <link rel="icon" type="image/svg+xml" href="../gulsonLogo.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2c3e50 0%, #4a5568 30%, #718096 70%, #e2e8f0 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .header .description {
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0.8;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            font-size: 0.8em;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Demo Section - Screenshots */
+        .demo-section {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .demo-container {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .demo-container h3 {
+            font-size: 2em;
+            color: #4a154b;
+            margin-bottom: 25px;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .screenshot-item {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .screenshot-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .features-section {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            margin-top: 20px;
+            padding: 50px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .features-section h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 18px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(74,21,75,0.05), rgba(0,122,90,0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+            color: #4a154b;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .feature-card p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            line-height: 1.7;
+            font-size: 1em;
+        }
+
+        .feature-badge {
+            background: linear-gradient(135deg, #4a154b, #36C5F0);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: rgba(255,255,255,0.8);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .header .description {
+                padding: 0 15px;
+                font-size: 1em;
+                line-height: 1.7;
+            }
+
+            .features-section {
+                padding: 30px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .demo-container {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .features-section h2 {
+                font-size: 2em;
+            }
+
+            .feature-card {
+                padding: 24px 20px;
+            }
+
+            .demo-container {
+                padding: 25px 15px;
+            }
+
+            .demo-container h3 {
+                font-size: 1.5em;
+            }
+
+            .screenshot-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="header">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <a href="../" class="back-btn">← Back to Home</a>
+                <a href="https://github.com/nickgulson11" target="_blank" class="back-btn" style="background: rgba(255,255,255,0.3);">💻 GitHub</a>
+            </div>
+            <h1>Betty - Slack Betting Bot</h1>
+            <div class="subtitle">NBA Game Wager Tracker</div>
+            <div class="description">
+                A Slack bot that tracks NBA game wagers between friends, automatically announces winners, and chirps the losers after each game.
+            </div>
+        </section>
+
+        <!-- Demo Section -->
+        <section class="demo-section">
+            <div class="demo-container">
+                <h3>Betty in Action</h3>
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <img src="Screenshot 2025-11-13 at 2.38.45 PM.png" alt="Betty announcing game winner in Slack">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="Screenshot 2025-11-13 at 2.42.21 PM.png" alt="Betty trash talking in Slack channel">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <!-- Automatic Game Tracking -->
+                <div class="feature-card">
+                    <span class="feature-icon">🏀</span>
+                    <div class="feature-badge">Real-time</div>
+                    <h3>Automatic Game Tracking</h3>
+                    <p>Betty monitors NBA games in real-time and knows exactly when they finish. No manual updates needed - she's always watching the scoreboard.</p>
+                </div>
+
+                <!-- Winner Announcement -->
+                <div class="feature-card">
+                    <span class="feature-icon">🏆</span>
+                    <div class="feature-badge">Instant Results</div>
+                    <h3>Winner Announcement</h3>
+                    <p>As soon as the final buzzer sounds, Betty automatically posts the results to your Slack channel, declaring the winner and settling the bet.</p>
+                </div>
+
+                <!-- Trash Talk -->
+                <div class="feature-card">
+                    <span class="feature-icon">💬</span>
+                    <div class="feature-badge">Entertainment</div>
+                    <h3>Trash Talk</h3>
+                    <p>Betty doesn't just announce winners - she chirps the losers with automated banter. Because friendly competition is more fun with a little smack talk.</p>
+                </div>
+
+                <!-- Wager History -->
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <div class="feature-badge">Analytics</div>
+                    <h3>Wager History Tracking</h3>
+                    <p>Keep track of who's winning overall between friends. Betty maintains a running record of all bets, wins, and losses throughout the season.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Nick Gulson. Built with caffeine and Claude Code ☕</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling and animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Add staggered animation delay
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.15}s`;
+            });
+        });
+    </script>
+</body>
+</html>
