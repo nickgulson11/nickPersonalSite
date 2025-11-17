@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Betty - Slack Betting Bot - Nick Gulson</title>
+    <title>Betty Slack Bot</title>
     <link rel="icon" type="image/svg+xml" href="../gulsonLogo.svg">
     <style>
         * {
@@ -210,6 +210,62 @@
             margin-bottom: 15px;
         }
 
+        .powered-by-section {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .powered-by-container {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .powered-by-container h3 {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .logos-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .logo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo-item img,
+        .logo-item svg {
+            height: 60px;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+        }
+
+        .logo-item span {
+            font-size: 0.9em;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
         .footer {
             text-align: center;
             padding: 40px 0;
@@ -274,11 +330,11 @@
         <section class="header">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
                 <a href="../" class="back-btn">← Back to Home</a>
-                <a href="https://github.com/nickgulson11" target="_blank" class="back-btn" style="background: rgba(255,255,255,0.3);">💻 GitHub</a>
+                <a href="https://github.com/nickgulson11/betty" target="_blank" class="back-btn" style="background: rgba(255,255,255,0.3);">💻 GitHub</a>
             </div>
-            <h1>Betty - Slack Betting Bot</h1>
+            <h1>Betty Slack Bot</h1>
             <div class="description">
-                A Slack bot that tracks NBA game wagers between friends, automatically announces winners, and chirps the losers after each game. Powered by the ESPN API for real-time game results and Claude for natural language processing and response generation.
+                A Slack bot that tracks NBA and NFL game wagers between friends, automatically announces winners, and chirps the losers after each game. Powered by the ESPN API for real-time game results and Claude for natural language processing and response generation.
             </div>
         </section>
 
@@ -297,6 +353,33 @@
             </div>
         </section>
 
+        <!-- Powered By Section -->
+        <section class="powered-by-section">
+            <div class="powered-by-container">
+                <h3>Powered By</h3>
+                <div class="logos-grid">
+                    <div class="logo-item">
+                        <svg height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="60" rx="8" fill="#CC9B7A"/>
+                            <text x="100" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">Claude</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="60" rx="8" fill="#D0021B"/>
+                            <text x="100" y="42" font-family="Arial Black, sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle" style="font-style: italic;">ESPN</text>
+                        </svg>
+                    </div>
+                    <div class="logo-item">
+                        <svg height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="200" height="60" rx="8" fill="#4A154B"/>
+                            <text x="100" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">Slack</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Features Section -->
         <section class="features-section">
             <h2>Key Features</h2>
@@ -306,7 +389,7 @@
                     <span class="feature-icon">🏀</span>
                     <div class="feature-badge">Real-time</div>
                     <h3>Automatic Game Tracking</h3>
-                    <p>Betty connects to the ESPN API to monitor NBA games in real-time and knows exactly when they finish. No manual updates needed - she's always watching the scoreboard.</p>
+                    <p>Betty connects to the ESPN API to monitor NBA and NFL games in real-time and knows exactly when they finish. No manual updates needed - she's always watching the scoreboard.</p>
                 </div>
 
                 <!-- Winner Announcement -->
